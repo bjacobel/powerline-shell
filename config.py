@@ -10,6 +10,9 @@ SEGMENTS = [
 # Show current virtual environment (see http://www.virtualenv.org/)
     'virtual_env',
 
+# Show ruby version
+    'ruby_version',
+
 # Show the current user's username as in ordinary prompts
     'username',
 
@@ -48,4 +51,4 @@ SEGMENTS = [
 ]
 
 # Change the colors used to draw individual segments in your prompt
-THEME = 'default'
+THEME = 'brian'
