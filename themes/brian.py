@@ -25,6 +25,9 @@ class Color(DefaultColor):
     VIRTUAL_ENV_BG = 35  # a mid-tone green
     VIRTUAL_ENV_FG = 00
 
+    RUBY_VERSION_BG = 35 # same as for virtualenvs
+    RUBY_VERSION_FG = 00
+
     HOME_SPECIAL_DISPLAY = True
     HOME_BG = 31  # blueish
     HOME_FG = 15  # white

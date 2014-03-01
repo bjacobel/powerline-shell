@@ -202,6 +202,9 @@ class Color(DefaultColor):
     VIRTUAL_ENV_BG = 35  # a mid-tone green
     VIRTUAL_ENV_FG = 00
 
+    RUBY_VERSION_BG = 35 # same as for virtualenvs
+    RUBY_VERSION_FG = 00
+
     HOME_SPECIAL_DISPLAY = True
     HOME_BG = 31  # blueish
     HOME_FG = 15  # white
@@ -236,14 +239,19 @@ import subprocess
 
 def add_ruby_version_segment():
     try:
-        p1 = subprocess.Popen(["ruby", "-v"], stdout=subprocess.PIPE)
-        p2 = subprocess.Popen(["sed", "s/ (.*//"], stdin=p1.stdout, stdout=subprocess.PIPE)
-        version = p2.communicate()[0].rstrip()
         if os.environ.has_key("GEM_HOME"):
-          gem = os.environ["GEM_HOME"].split("@")
-          if len(gem) > 1:
-            version += " " + gem[1]
-        powerline.append(version, 15, 1)
+            gem = os.environ["GEM_HOME"].split("@")
+
+            # Only display info if a non-default gemset is present
+            if len(gem) > 1:
+                p1 = subprocess.Popen(["ruby", "-v"], stdout=subprocess.PIPE)
+                p2 = subprocess.Popen(["sed", "s/ (.*//"], stdin=p1.stdout, stdout=subprocess.PIPE)
+                version = " {} {} ".format(p2.communicate()[0].rstrip(), gem[1])
+
+                bg = Color.RUBY_VERSION_BG
+                fg = Color.RUBY_VERSION_FG
+                
+                powerline.append(version, fg, bg)
     except OSError:
         return
 
